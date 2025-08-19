@@ -1,2 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
+
+h1 {
+    font-size: 32px;
+}
+
+.subtitle {
+    color: #6D6D6D;
+}
+
+.button,
+button {
+    padding: 10px 16px;
+    text-align: center;
+    background: #FFFF;
+    background: linear-gradient(90deg, rgba(30, 150, 203, 1) 0%, rgba(27, 120, 153, 1) 100%);
+    color: white;
+    font-weight: 500;
+    border-radius: 32px;
+}

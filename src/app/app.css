@@ -1,0 +1,8 @@
+#app-wrapper {
+    /* dvh to consider the address bar in the calculation  */
+    height: 100dvh;
+    /* dvw to consider the sidebar bar in the calculation  */
+    width: 100dvw;
+    background: #FFFF;
+    background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(194, 230, 244, 1) 100%);
+}
