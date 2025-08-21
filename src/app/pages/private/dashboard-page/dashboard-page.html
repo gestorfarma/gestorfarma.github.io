@@ -1,6 +1,8 @@
 <div class="p-4">
-    <h1>Dashboard</h1>
-    <div>
-        <plotly-plot [data]="graph.data" [layout]="graph.layout"></plotly-plot>
-    </div>
+  <h1>Dashboard</h1>
+  <div>
+    @if (graph(); as graph) {
+    <plotly-plot [data]="graph.data" [layout]="graph.layout!"></plotly-plot>
+    }
+  </div>
 </div>

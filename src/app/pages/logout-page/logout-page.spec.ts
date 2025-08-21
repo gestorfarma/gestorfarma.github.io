@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { provideZonelessChangeDetection } from '@angular/core';
 import { LogoutPage } from './logout-page';
 
 describe('LogoutPage', () => {
@@ -8,9 +9,9 @@ describe('LogoutPage', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LogoutPage]
-    })
-    .compileComponents();
+      imports: [LogoutPage],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LogoutPage);
     component = fixture.componentInstance;

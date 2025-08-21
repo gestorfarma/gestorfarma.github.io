@@ -1,6 +1,6 @@
 {
-  "name": "app-cli",
-  "short_name": "app-cli",
+  "name": "redefarma",
+  "short_name": "redefarma",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",

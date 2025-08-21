@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { provideZonelessChangeDetection } from '@angular/core';
 import { NewPasswordForm } from './new-password-form';
 
 describe('NewPasswordForm', () => {
@@ -8,9 +9,9 @@ describe('NewPasswordForm', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NewPasswordForm]
-    })
-    .compileComponents();
+      imports: [NewPasswordForm],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(NewPasswordForm);
     component = fixture.componentInstance;

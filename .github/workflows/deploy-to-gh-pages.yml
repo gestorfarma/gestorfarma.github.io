@@ -22,11 +22,11 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # unit-test:
-  # uses: ./.github/workflows/unit-tests.yml
+  unit-test:
+    uses: ./.github/workflows/unit-tests.yml
   build:
     name: Build Angular App
-    #needs: [unit-test]
+    needs: [unit-test]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -41,19 +41,13 @@ jobs:
       - name: Build
         run: npm run build
       - name: Generate 404 file
-        run: 'cp ./dist/app-cli/browser/index.html ./dist/app-cli/browser/404.html'
+        run: 'cp ./dist/redefarma/browser/index.html ./dist/redefarma/browser/404.html'
       - name: Archive build
         if: success()
         uses: actions/upload-artifact@v4
         with:
           name: deploy_dist_folder
-          path: dist/app-cli/browser
-      - name: Archive code coverage result
-        if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: deploy_coverage
-          path: coverage
+          path: dist/redefarma/browser
   # Single deploy job since we're just deploying
   deploy:
     name: Deploy to Github Pages
@@ -70,12 +64,12 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: deploy_dist_folder
-          path: dist/app-cli/browser
+          path: dist/redefarma/browser
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: 'dist/app-cli/browser'
+          path: 'dist/redefarma/browser'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

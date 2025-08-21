@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { provideZonelessChangeDetection } from '@angular/core';
 import { FirstPasswordChangePage } from './first-password-change-page';
 
 describe('FirstPasswordChangePage', () => {
@@ -8,9 +9,9 @@ describe('FirstPasswordChangePage', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FirstPasswordChangePage]
-    })
-    .compileComponents();
+      imports: [FirstPasswordChangePage],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(FirstPasswordChangePage);
     component = fixture.componentInstance;

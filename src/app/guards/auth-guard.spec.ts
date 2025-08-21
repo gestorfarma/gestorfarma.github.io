@@ -1,14 +1,16 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixtureNoNgZone, TestBed } from '@angular/core/testing';
 import { CanActivateFn } from '@angular/router';
 
-import { authGuard } from './auth-guard';
+import { nonAuthenticatedGuard } from './auth-guard';
 
-describe('authGuard', () => {
+describe('nonAuthenticatedGuard', () => {
   const executeGuard: CanActivateFn = (...guardParameters) =>
-    TestBed.runInInjectionContext(() => authGuard(...guardParameters));
+    TestBed.runInInjectionContext(() => nonAuthenticatedGuard(...guardParameters));
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [{ provide: ComponentFixtureNoNgZone, useValue: true }],
+    });
   });
 
   it('should be created', () => {
