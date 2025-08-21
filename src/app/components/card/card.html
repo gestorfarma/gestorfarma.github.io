@@ -1,3 +1,7 @@
-<div class="bg-white p-8 rounded-xl">
-    <ng-content></ng-content>
+<div
+  class="bg-white p-8 shadow-md/30"
+  [class]="roundSizeTop() ? 'rounded-t-[30px]' : 'rounded-xl'"
+  [ngClass]="{ 'inset-shadow-sm/30': topShadow() }"
+>
+  <ng-content></ng-content>
 </div>

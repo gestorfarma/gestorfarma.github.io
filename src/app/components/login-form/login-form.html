@@ -1,13 +1,48 @@
-<form class="flex flex-col gap-8">
-    <div>
-        <input type="text" name="login" placeholder="Usuário">
-    </div>
+<form class="flex flex-col gap-4" (submit)="submitForm()">
+  <div class="flex flex-col">
+    <mat-form-field>
+      <input
+        type="text"
+        name="login"
+        placeholder="Usuário"
+        matInput
+        [formControl]="userFormControl"
+        [errorStateMatcher]="matcher"
+      />
+      @if (userFormControl.hasError('login') && !userFormControl.hasError('required')) {
+      <mat-error>Insira um usuário válido</mat-error>
+      } @if (userFormControl.hasError('required')) {
+      <mat-error>Email é <strong>obrigatório</strong></mat-error>
+      }
+    </mat-form-field>
 
-    <div>
-        <input type="email" name="password" placeholder="Senha">
-    </div>
+    <mat-form-field>
+      <input
+        [type]="showPassword() ? 'text' : 'password'"
+        name="password"
+        placeholder="Senha"
+        matInput
+        [formControl]="passwordFormControl"
+        [errorStateMatcher]="matcher"
+      />
+      <span
+        matSuffix
+        (click)="
+          showPassword.set(!showPassword()); $event.stopPropagation(); $event.preventDefault()
+        "
+        ><mat-icon class="!text-[#1b7899]" color="primary">{{
+          showPassword() ? 'visibility_off' : 'visibility'
+        }}</mat-icon></span
+      >
+      @if (passwordFormControl.hasError('email') && !passwordFormControl.hasError('required')) {
+      <mat-error>Insira ums senha válido</mat-error>
+      } @if (passwordFormControl.hasError('required')) {
+      <mat-error>Senha é <strong>obrigatório</strong></mat-error>
+      }
+    </mat-form-field>
+  </div>
 
-    <div>
-        <button class="w-full">Acessar</button>
-    </div>
+  <div>
+    <button class="w-full" type="submit">Acessar</button>
+  </div>
 </form>

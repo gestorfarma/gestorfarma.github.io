@@ -1,14 +1,19 @@
-import { ApplicationConfig, importProvidersFrom, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import * as PlotlyJS from 'plotly.js-dist-min';
+import { routes } from '@/app.routes';
+import {
+  ApplicationConfig,
+  importProvidersFrom,
+  provideBrowserGlobalErrorListeners,
+  provideZonelessChangeDetection,
+} from '@angular/core';
+import { provideRouter, withRouterConfig } from '@angular/router';
 import { PlotlyModule } from 'angular-plotly.js';
-import { routes } from './app.routes';
+import * as PlotlyJS from 'plotly.js-dist-min';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    provideRouter(routes),
-    importProvidersFrom(PlotlyModule.forRoot(PlotlyJS))
-  ]
+    provideRouter(routes, withRouterConfig({ paramsInheritanceStrategy: 'always' })),
+    importProvidersFrom(PlotlyModule.forRoot(PlotlyJS)),
+  ],
 };

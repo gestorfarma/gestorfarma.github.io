@@ -1,8 +1,15 @@
+import { authenticatedGuard, nonAuthenticatedGuard } from '@/guards/auth-guard';
 import { Routes } from '@angular/router';
-import { DashboardPage } from './pages/dashboard-page/dashboard-page';
-import { LoginPage } from './pages/login-page/login-page';
 
 export const routes: Routes = [
-    { path: "", component: LoginPage },
-    { path: "dashboard", component: DashboardPage }
+  {
+    path: '',
+    canActivate: [nonAuthenticatedGuard],
+    loadChildren: () => import('./pages/public/public.routes').then((r) => r.publicRoutes),
+  },
+  {
+    path: '',
+    canActivate: [authenticatedGuard],
+    loadChildren: () => import('./pages/private/private.routes').then((r) => r.privateRoutes),
+  },
 ];

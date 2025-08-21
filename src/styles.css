@@ -1,21 +1,40 @@
 /* You can add global styles to this file, and also import other style files */
-@import "tailwindcss";
+@import 'tailwindcss';
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
 
 h1 {
-    font-size: 32px;
+  font-size: 32px;
+}
+
+h2 {
+  font-size: 28px;
 }
 
 .subtitle {
-    color: #6D6D6D;
+  color: #6d6d6d;
 }
 
 .button,
 button {
-    padding: 10px 16px;
-    text-align: center;
-    background: #FFFF;
-    background: linear-gradient(90deg, rgba(30, 150, 203, 1) 0%, rgba(27, 120, 153, 1) 100%);
-    color: white;
-    font-weight: 500;
-    border-radius: 32px;
+  padding: 16px;
+  text-align: center;
+  background: #ffff;
+  background: linear-gradient(90deg, rgba(30, 150, 203, 1) 0%, rgba(27, 120, 153, 1) 100%);
+  color: white;
+  font-weight: 500;
+  border-radius: 32px;
+}
+
+.mat-mdc-text-field-wrapper {
+  background: none !important;
+}
+
+.mat-mdc-progress-bar {
+  border-radius: 16px; /* Adjust the value for desired roundness */
 }

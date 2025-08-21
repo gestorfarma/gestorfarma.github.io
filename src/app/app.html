@@ -1,11 +1,15 @@
-<div id="app-wrapper" class="flex flex-col">
+<div id="app-wrapper" class="flex flex-col h-full">
+  @if(showHeader()) {
   <div class="flex gap-2 p-4 justify-between">
-    <div><a routerLink="/">GESTOR<b>FARMA</b></a></div>
+    <div>
+      <a routerLink="/">GESTOR<b>FARMA</b></a>
+    </div>
 
     <div class="flex gap-4">
       <a routerLink="/dashboard">Dashboard</a>
     </div>
   </div>
+  }
   <div class="grow">
     <router-outlet></router-outlet>
   </div>
