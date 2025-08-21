@@ -2,10 +2,9 @@ import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { filter, map } from 'rxjs';
+import { AuthService } from './services/auth/auth-service';
 
-const pathsWithoutHeader = ['/', '/login', '/password-reset', '/first-password-change'];
-
-const DATA_COLLECTION = 'APP_DATA';
+const pathsWithoutHeader = ['/', '/login', '/password-reset', '/force-password-change'];
 
 @Component({
   selector: 'app-root',
@@ -15,6 +14,8 @@ const DATA_COLLECTION = 'APP_DATA';
 })
 export class App {
   private router = inject(Router);
+
+  authService = inject(AuthService);
 
   showHeader = toSignal(
     this.router.events.pipe(

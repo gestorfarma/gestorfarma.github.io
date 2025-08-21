@@ -1,5 +1,6 @@
 import { LocalDbService } from '@/services/local-db/local-db-service';
 import { inject, Injectable, signal } from '@angular/core';
+import { Router } from '@angular/router';
 
 const TEMPORARY_USER_CREDENTIALS = [
   {
@@ -8,6 +9,7 @@ const TEMPORARY_USER_CREDENTIALS = [
     name: 'Teste Credential',
     id: 'ab38f2c',
     token: 'a@f$fasdfg%asdASDF-123fasdF234F3',
+    forcePasswordChange: true,
   },
 ];
 
@@ -18,6 +20,7 @@ export type User = { name: string };
 export type AuthData = {
   user: User;
   token: string;
+  forcePasswordChange: boolean;
 };
 
 export type Error = { error: string; code: number };
@@ -28,7 +31,9 @@ export type Error = { error: string; code: number };
 export class AuthService {
   private localDbService = inject(LocalDbService);
 
-  authData = signal<AuthData | undefined>(this.loadAuthData());
+  private router = inject(Router);
+
+  authData = signal(this.loadAuthData());
 
   async login(username: string, password: string): Promise<[User?, Error?]> {
     const validTemporaryCredentials = this.authenticate(username, password);
@@ -43,6 +48,8 @@ export class AuthService {
 
   async logout() {
     this.localDbService.removeData(AUTH_DB_KEY);
+    this.authData.set(undefined);
+    this.router.navigate(['/']);
   }
 
   async changePassword(username: string, newPassword: string) {}
@@ -54,11 +61,22 @@ export class AuthService {
     return validTemporaryCredentials;
   }
 
-  private setAuthData(userData: { name: string; id: string; token: string }) {
-    const user = { name: userData.name, id: userData.id };
+  private setAuthData({
+    name,
+    id,
+    token,
+    forcePasswordChange,
+  }: {
+    name: string;
+    id: string;
+    token: string;
+    forcePasswordChange: boolean;
+  }) {
+    const user = { name, id };
     const authData: AuthData = {
-      token: userData.token,
+      token,
       user,
+      forcePasswordChange,
     };
     this.localDbService.setData(AUTH_DB_KEY, authData);
     this.authData.set(authData);

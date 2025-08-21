@@ -1,15 +1,19 @@
 <div id="app-wrapper" class="flex flex-col h-full">
-  @if(showHeader()) {
-  <div class="flex gap-2 p-4 justify-between">
+  <div class="flex gap-2 p-4 justify-between items-center">
+    @if(showHeader()) {
     <div>
       <a routerLink="/">GESTOR<b>FARMA</b></a>
     </div>
+    }
 
-    <div class="flex gap-4">
+    <div class="grow justify-end flex gap-4">
+      @if(showHeader()) {
       <a routerLink="/dashboard">Dashboard</a>
+      } @if(authService.authData()) {
+      <a routerLink="/logout" href="#">Sair</a>
+      }
     </div>
   </div>
-  }
   <div class="grow">
     <router-outlet></router-outlet>
   </div>

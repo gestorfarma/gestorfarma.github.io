@@ -23,3 +23,25 @@ export const nonAuthenticatedGuard: CanActivateFn = (route, state) => {
     return true;
   }
 };
+
+export const forcePasswordChangeGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+  const forcePasswordChange = authService.authData()?.forcePasswordChange;
+  if (forcePasswordChange) {
+    return true;
+  } else {
+    return router.parseUrl('/force-password-change');
+  }
+};
+
+export const noNeedToforcePasswordChangeGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+  const forcePasswordChange = authService.authData()?.forcePasswordChange;
+  if (forcePasswordChange) {
+    return router.parseUrl('/force-password-change');
+  } else {
+    return true;
+  }
+};

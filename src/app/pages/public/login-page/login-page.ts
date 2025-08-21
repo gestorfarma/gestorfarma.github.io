@@ -1,5 +1,6 @@
 import { Card } from '@/components/card/card';
 import { LoginForm } from '@/components/login-form/login-form';
+import { ALERT_TYPE, AlertService } from '@/services/alert/alert-service';
 import { AuthService } from '@/services/auth/auth-service';
 import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
@@ -11,19 +12,17 @@ import { Router } from '@angular/router';
   styleUrl: './login-page.css',
 })
 export class LoginPage {
+  authenticating = signal(false);
+
   private router = inject(Router);
 
   private authService = inject(AuthService);
 
-  authenticating = signal(false);
+  private alertService = inject(AlertService);
 
   protected readonly subtitle = signal(
     'A combinação perfeita entre informações regionais do mercado de farma e indicadores poderosos de gestão!'
   );
-
-  goToFirstPasswordPage() {
-    this.router.navigate(['first-password-change']);
-  }
 
   async login({ username, password }: { username: string; password: string }) {
     this.authenticating.set(true);
@@ -33,9 +32,17 @@ export class LoginPage {
     this.authenticating.set(false);
 
     if (error) {
-      return alert('Credenciais inválidas 3');
+      this.alertLoginError('Credenciais inválidas', 'Fechar');
     } else {
-      return this.goToFirstPasswordPage();
+      this.router.navigate(['dashboard']);
     }
+  }
+
+  private alertLoginError(message: string, action: string) {
+    this.alertService.alert(message, action, {
+      verticalPosition: 'top',
+      duration: 7e3,
+      type: ALERT_TYPE.ERROR,
+    });
   }
 }

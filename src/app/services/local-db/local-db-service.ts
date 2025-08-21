@@ -20,7 +20,7 @@ export class LocalDbService {
   }
 
   removeData(key: string) {
-    localStorage[key] = undefined;
+    localStorage.removeItem(key);
     return true;
   }
 }
