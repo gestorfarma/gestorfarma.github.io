@@ -15,7 +15,7 @@ const TEMPORARY_USER_CREDENTIALS = [
 
 const AUTH_DB_KEY = 'AUTH_DATA';
 
-export type User = { name: string };
+export type User = { name: string; id: string };
 
 export type AuthData = {
   user: User;
@@ -38,8 +38,9 @@ export class AuthService {
   async login(username: string, password: string): Promise<[User?, Error?]> {
     const validTemporaryCredentials = this.authenticate(username, password);
     if (validTemporaryCredentials) {
-      const user = { name: validTemporaryCredentials.name };
-      this.setAuthData(validTemporaryCredentials);
+      const { name, id, forcePasswordChange, token } = validTemporaryCredentials;
+      const user = { name, id };
+      this.setAuthData({ forcePasswordChange, token, user });
       return [user, undefined];
     } else {
       return [undefined, { error: 'Invalid credentials', code: 1 }];
@@ -54,6 +55,11 @@ export class AuthService {
 
   async changePassword(username: string, newPassword: string) {}
 
+  async setFirstPassword() {
+    const authData: AuthData = { ...this.authData()!, forcePasswordChange: false };
+    this.setAuthData(authData);
+  }
+
   private authenticate(username: string, password: string) {
     const validTemporaryCredentials = TEMPORARY_USER_CREDENTIALS.find(
       (credential) => credential.username === username && credential.password === password
@@ -61,29 +67,13 @@ export class AuthService {
     return validTemporaryCredentials;
   }
 
-  private setAuthData({
-    name,
-    id,
-    token,
-    forcePasswordChange,
-  }: {
-    name: string;
-    id: string;
-    token: string;
-    forcePasswordChange: boolean;
-  }) {
-    const user = { name, id };
-    const authData: AuthData = {
-      token,
-      user,
-      forcePasswordChange,
-    };
+  private setAuthData(authData: AuthData) {
     this.localDbService.setData(AUTH_DB_KEY, authData);
     this.authData.set(authData);
   }
 
   private loadAuthData() {
-    const authData = this.localDbService.getData(AUTH_DB_KEY);
+    const authData: AuthData | undefined = this.localDbService.getData(AUTH_DB_KEY);
     return authData;
   }
 }

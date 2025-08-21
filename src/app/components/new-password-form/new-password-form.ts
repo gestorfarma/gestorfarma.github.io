@@ -35,7 +35,7 @@ const secretLevelLabel: { [key in SECRET_LEVEL]: string } = {
 export class NewPasswordForm {
   showPassword = signal(false);
 
-  passwordFormControl = new FormControl('', [Validators.required, Validators.email]);
+  passwordFormControl = new FormControl('', [Validators.required]);
 
   passwordConfirmationFormControl = new FormControl('', [Validators.required]);
 
@@ -47,5 +47,5 @@ export class NewPasswordForm {
 
   secretLevelLabel = secretLevelLabel;
 
-  @Output() submit = new EventEmitter();
+  @Output() submitted = new EventEmitter();
 }

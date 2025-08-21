@@ -40,7 +40,7 @@ export const noNeedToforcePasswordChangeGuard: CanActivateFn = (route, state) =>
   const router = inject(Router);
   const forcePasswordChange = authService.authData()?.forcePasswordChange;
   if (forcePasswordChange) {
-    return true; // router.parseUrl('/force-password-change');
+    return router.parseUrl('/force-password-change');
   } else {
     return true;
   }
